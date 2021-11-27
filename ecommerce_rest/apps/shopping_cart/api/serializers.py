@@ -6,3 +6,10 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shopping_cart
         fields = '__all__'
+
+class ShoppingCartSerializerWithout(serializers.ModelSerializer):
+    class Meta:
+        model = Shopping_cart
+        fields = ('item_id','quantity','price')
+        
+            
