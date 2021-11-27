@@ -4,8 +4,7 @@
 
 ### Descripcion Y Contexto
 
-Este proyecto esta desarrollando en el lengauje Python usando el Framework de Django Rest. Se realizara un crud de Categorias, Productos e Items.
-
+Este proyecto esta desarrollando en el lengauje Python usando el Framework de Django Rest.
 
 ### Requeriments
 
@@ -41,32 +40,30 @@ Este proyecto esta desarrollando en el lengauje Python usando el Framework de Dj
 
 
 
-## Category
+## Shopping cart
 
 ### GET
 
-List Category
-
+List Shopping cart
 Request 
 
-    --http://127.0.0.1:8000/petStore/category/
+    --http://localhost:8000/api/v1/cart/
  
 Response 
  
 ```
 [
     {
-        "id": 1,
-        "description": "Large Angelfish"
-    },
-    {
         "id": 2,
-        "description": "Dogs"
-    },
-  ]
+        "customerId": "pepe2@hotmail",
+        "item_id": 5,
+        "quantity": 80,
+        "price": 24.0
+    }
+]
 ```
     
- List Category By Id
+ List  Shopping cart by email
  
  Request GET
  
@@ -75,10 +72,11 @@ Response
 Response
 
 ```
-{
-    "id": 2,
-    "description": "Dogs"
-}
+    {
+        "item_id": 5,
+        "quantity": 80,
+        "price": 24.0
+    }
    
  ```
    
@@ -87,10 +85,14 @@ Response
 Request 
 
 ```
-  --http://127.0.0.1:8000/petStore/category/2/
+  --http://localhost:8000/api/v1/cart/
   
-   {
-        "description": "CategoryExample"
+    {
+
+        "customerId": "pepe@hotmail",
+        "item_id": 5,
+        "quantity": 80,
+        "price": 24.0
     }
 
 ```
@@ -100,125 +102,15 @@ Request
 Request 
 
 ```
-    http://127.0.0.1:8000/petStore/category/2/
+    http://localhost:8000/api/v1/cart?customerId=pepito@gmail.com&item_id=5  
     
 ```
 
 
-## Product
-
-### GET
-
-List Products
-
-Request 
-
-    --http://127.0.0.1:8000/petStore/product/
-    
-Response
-
-```
-[
-[
-    {
-        "id": 1,
-        "category": {
-            "id": 2,
-            "description": "Dogs"
-        },
-        "name": "Godzilla",
-        "description": "Aquatic animal"
-    },
-    {
-        "id": 2,
-        "category": {
-            "id": 1,
-            "description": "Large Angelfish"
-        },
-        "name": "ziberan",
-        "description": "Aquatic animal"
-    }
-]
-]
-
-```
-
-List Product by Id
+### CLEAR
 
 
 Request 
 
-    --http://127.0.0.1:8000/petStore/product/1/
+    --http://localhost:8000/api/v1/cart/clear/:customerId
     
-    
-Response
-
-```
-{
-    "id": 1,
-    "name": "Angelfish",
-    "description": "Aquatic animal",
-    "categoy": 1
-}
-
-```
-
-
-### POST 
-
-
-Request
-```
-http://127.0.0.1:8000/petStore/product/1/
-
-{
-    "name": "Godzilla",
-    "description": "Aquatic animal",
-    "categoy": 2
-}
-
-```
-
-
-## Item
-
-### GET
-
-Request 
-
-```
-      http://127.0.0.1:8000/petStore/item/
-[
-    {
-        "id": 2,
-        "image": "/archivos/975de4e0-3832-4e57-a81c-53b11f847ee1.jpg",
-        "product": {
-            "id": 1,
-            "category": {
-                "id": 2,
-                "description": "Dogs"
-            },
-            "name": "Godzilla",
-            "description": "Aquatic animal"
-        },
-        "description": "Large Angelfish3",
-        "quantity": 2,
-        "price": 2400.0
-    }  
-]
-
-```
-### PUT
-
-Request
-
-
-```
-      http://127.0.0.1:8000/petStore/item/2
-
-{
-  
-    "quantity": 30
-
-}
-```
