@@ -67,7 +67,7 @@ Response
  
  Request GET
  
-    --http://127.0.0.1:8000/petStore/category/
+    --http://localhost:8000/api/v1/cart/pepe2@hotmail
     
 Response
 
