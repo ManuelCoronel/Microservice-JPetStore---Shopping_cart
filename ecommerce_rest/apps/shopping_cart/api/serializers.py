@@ -10,6 +10,6 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
 class ShoppingCartSerializerWithout(serializers.ModelSerializer):
     class Meta:
         model = Shopping_cart
-        fields = ('item_id','quantity','price')
+        fields = ('item_id','quantity','price','image','stock','name')
         
             
