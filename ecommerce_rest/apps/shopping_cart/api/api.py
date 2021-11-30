@@ -3,9 +3,9 @@ from apps.shopping_cart.api.serializers import ShoppingCartSerializer,ShoppingCa
 from rest_framework.decorators import api_view
 from apps.shopping_cart.models import Shopping_cart
 from rest_framework.response import Response
+import json
 
-
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET','POST'])
 def shopping_cart_list(request):
     
     if request.method == 'GET':
@@ -19,25 +19,17 @@ def shopping_cart_list(request):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-    elif request.method == 'DELETE':
-        customer_id = request.GET.get('customerId')
-        itemId = int(request.GET.get('item_id'))
-        print(customer_id)
-        print(itemId)
 
-        shopping_cart = Shopping_cart.objects.filter(customerId=customer_id,item_id=itemId)
-        print(shopping_cart)
-        shopping_cart.delete()
+# ELIMINA UN ITEM DEL CARRITO SEGUN EL CORREO Y EL ID DEL ITEM
+@api_view(['DELETE'])   
+def shopping_cart_delete_detail(request, addresS,item_id):
+    if request.method == 'DELETE':
+        shopping_cart = Shopping_cart.objects.filter(customerId=addresS,item_id=item_id)
+        Shopping_cart.delete()
         return Response(status=204)
 
-@api_view(['GET'])   
-def shopping_cart_de(request):
-    if request.method == 'GET':
-        shopping_cart = Shopping_cart.objects.all()
-        serializer = ShoppingCartSerializer(shopping_cart, many=True)
-        return Response(serializer.data)
 
-@api_view(['GET','PUT'])
+@api_view(['GET','PUT','DELETE'])
 def shopping_cart_detail(request, addresS):
     if request.method == 'GET':
         shopping_cart = Shopping_cart.objects.filter(customerId=addresS)
@@ -51,6 +43,10 @@ def shopping_cart_detail(request, addresS):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
+    if request.method == 'DELETE':
+        shopping_cart = Shopping_cart.objects.filter(customerId=addresS)
+        shopping_cart.delete()
+        return Response(status=204)
 
 
 
@@ -69,3 +65,12 @@ def shopping_cart_clear(request, addresS):
         shopping_cart = Shopping_cart.objects.filter(customerId=addresS)
         shopping_cart.delete()
         return Response(status=204)
+
+@api_view(['GET'])
+def shopping_cart_count(request, addresS):
+    if request.method == 'GET':
+        shopping_cart = len(Shopping_cart.objects.filter(customerId=addresS))
+    data = {
+        'count': shopping_cart
+    }
+    return Response(data)
