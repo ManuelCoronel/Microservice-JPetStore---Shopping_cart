@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from apps.shopping_cart.models import Shopping_cart
 from rest_framework.response import Response
 import json
-
+# LISTA LOS CARRITOS Y AGREGA
 @api_view(['GET','POST'])
 def shopping_cart_list(request):
     
@@ -25,10 +25,12 @@ def shopping_cart_list(request):
 def shopping_cart_delete_detail(request, addresS,item_id):
     if request.method == 'DELETE':
         shopping_cart = Shopping_cart.objects.filter(customerId=addresS,item_id=item_id)
-        Shopping_cart.delete()
+        shopping_cart.delete()
         return Response(status=204)
 
-
+# OBTIENE UN CARRITO SEGUN EL CORREO
+# EL PUT AGREGA AL CARRITO  SEGUN EL CORREO, POR ESO EL SERIALIZER SIN CUSTOMER
+# EL DELETE LIMPIA EL CARRITO SEGUN EL CORREO
 @api_view(['GET','PUT','DELETE'])
 def shopping_cart_detail(request, addresS):
     if request.method == 'GET':
@@ -49,7 +51,7 @@ def shopping_cart_detail(request, addresS):
         return Response(status=204)
 
 
-
+# ELIMINA DEL CARRITO SEGUN EL CORREO EL ITEM SELECCIONADO
 @api_view(['DELETE'])
 def shopping_cart_del(request, addresS,item_id=None):
     if request.method == 'DELETE':
@@ -59,13 +61,7 @@ def shopping_cart_del(request, addresS,item_id=None):
 
 
 
-@api_view(['DELETE'])
-def shopping_cart_clear(request, addresS):
-    if request.method == 'DELETE':
-        shopping_cart = Shopping_cart.objects.filter(customerId=addresS)
-        shopping_cart.delete()
-        return Response(status=204)
-
+# CUENTA LA CANTIDAD DE ITEMS SEGUN EL CORREO
 @api_view(['GET'])
 def shopping_cart_count(request, addresS):
     if request.method == 'GET':

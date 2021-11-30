@@ -7,6 +7,8 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
         model = Shopping_cart
         fields = '__all__'
 
+
+# SERIALIZER SIN CUSTOMER 
 class ShoppingCartSerializerWithout(serializers.ModelSerializer):
     class Meta:
         model = Shopping_cart
